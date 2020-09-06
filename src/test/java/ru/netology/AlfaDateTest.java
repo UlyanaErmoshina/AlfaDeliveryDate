@@ -6,52 +6,43 @@ import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
-
+import static ru.netology.DataGenerator.getDate;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Locale;
 
 
 class AlfaDateTest {
 
-    private Faker faker;
-    private UserInfo User;
+    private UserInfo user;
     private DataGenerator AlfaUser;
-
 
     @BeforeEach
     void setUpAll() {
-        faker = new Faker(new Locale("ru"));
-        AlfaUser = new DataGenerator();
-        User = AlfaUser.GetUserInfo();
+        user = AlfaUser.getUserInfo();
 
     }
 
-
     @Test
-    void ShouldSendRequest() {
+    void shouldSendRequest() {
         open("http://localhost:7777");
         SelenideElement form = $(".form");
-        form.$("[data-test-id=city] input").setValue(User.getCity());
+        form.$("[data-test-id=city] input").setValue(user.getCity());
         form.$("[data-test-id=date] input").sendKeys(Keys.CONTROL + "a");
         form.$("[data-test-id=date] input").sendKeys(Keys.BACK_SPACE);
-        form.$("[data-test-id=date] input").setValue(AlfaUser.GetDate(4));
-        form.$("[data-test-id=name] input").setValue(User.getName());
-        form.$("[data-test-id=phone] input").setValue(User.getPhone());
+        form.$("[data-test-id=date] input").setValue(getDate(4));
+        form.$("[data-test-id=name] input").setValue(user.getName());
+        form.$("[data-test-id=phone] input").setValue(user.getPhone());
         form.$("[data-test-id=agreement]").click();
         form.$(".button").click();
         $(byText("Успешно!")).waitUntil(visible, 15000);
-
+        $("[data-test-id=success-notification]").shouldHave(text("Встреча успешно запланирована на "+ getDate((4))));
         form.$("[data-test-id=date] input").sendKeys(Keys.CONTROL + "a");
         form.$("[data-test-id=date] input").sendKeys(Keys.BACK_SPACE);
-        form.$("[data-test-id=date] input").setValue(AlfaUser.GetDate(5));
+        form.$("[data-test-id=date] input").setValue(getDate(5));
         form.$(".button").click();
         $(byText("Перепланировать")).waitUntil(visible, 15000);
         $("[data-test-id=replan-notification] button").click();

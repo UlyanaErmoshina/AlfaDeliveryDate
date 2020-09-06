@@ -1,7 +1,6 @@
 package ru.netology;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 
@@ -9,17 +8,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 
 public class UserInfo {
-    public UserInfo(String city, String name, String phone) {
-        this.city = city;
-        this.name = name;
-        this.phone = phone;
-    }
 
     private String city;
     private String name;
     private String phone;
 
+    public UserInfo(String city, String name, String phone) {
+        this.city = city;
+        this.name = name;
+        this.phone = phone;
     }
+}
 
 
 

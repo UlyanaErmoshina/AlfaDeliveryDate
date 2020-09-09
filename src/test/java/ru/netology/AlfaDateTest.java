@@ -7,6 +7,7 @@ import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 import static ru.netology.DataGenerator.getDate;
+import static ru.netology.DataGenerator.getUserInfo;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,11 +17,10 @@ import org.openqa.selenium.Keys;
 class AlfaDateTest {
 
     private UserInfo user;
-    private DataGenerator alfaUser;
 
     @BeforeEach
     void setUpAll() {
-        user = alfaUser.getUserInfo();
+        user = getUserInfo();
 
     }
 
